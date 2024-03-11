@@ -1,4 +1,7 @@
+from django.shortcuts import render
 from django.views.generic import ListView, DetailView
+
+from news.forms import PostForm
 from .models import Post
 from .filters import PostFilter
 
@@ -41,3 +44,7 @@ class PostDetail(DetailView):
     template_name = 'new.html'
     # Название объекта, в котором будет выбранный пользователем продукт
     context_object_name = 'new'
+
+def find(request):
+    form = PostForm
+    return render(request, 'search.html', {'from': form})

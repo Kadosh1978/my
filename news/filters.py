@@ -14,7 +14,7 @@ class PostFilter(FilterSet):
        fields = {
            # поиск по названию
            'head': ['icontains'],
-        #    'author': [icontains],
+           'author': ['exact'],
            # количество товаров должно быть больше или равно
         #    'quantity': ['gt'],
            'time_in': [

@@ -7,13 +7,13 @@ News
 {% block content %}
    <h1>All news</h1>
 
-   {# Добавляем форму, которая объединяет набор полей, которые будут отправляться в запросе #}
+   {% comment %} {# Добавляем форму, которая объединяет набор полей, которые будут отправляться в запросе #}
    <form action="" method="get">
     {# Переменная, которую мы передали через контекст, может сгенерировать нам форму с полями #}
     {{ filterset.form.as_p }}
     {# Добавим кнопку отправки данных формы #}
     <input type="submit" value="Find" />
-</form>
+</form> {% endcomment %}
 
    <hr>
    {% if news %}
@@ -54,7 +54,7 @@ News
 
    {# Информация о предыдущих страницах #}
    {% if page_obj.has_previous %}
-   <a href="?{% url_replace page=1 %}">1</a>
+   <a href="?page=1">1</a>
        {% if page_obj.previous_page_number != 1 %}
            ...
            <a href="?page={{ page_obj.previous_page_number }}">{{ page_obj.previous_page_number }}</a>
