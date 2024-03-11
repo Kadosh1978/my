@@ -1,23 +1,23 @@
 {% extends 'flatpages/default.html' %}
 
 {% block title %}
-News
+Search
 {% endblock title %}
 
 {% block content %}
    <h1>Search</h1>
-      {% comment %} {# Добавляем форму, которая объединяет набор полей, которые будут отправляться в запросе #}
-   <form action="" method="get">
+    {# Добавляем форму, которая объединяет набор полей, которые будут отправляться в запросе #}
+   {% comment %} <form action="" method="get"> {% endcomment %}
     {# Переменная, которую мы передали через контекст, может сгенерировать нам форму с полями #}
-    {{ filterset.form.as_p }}
+    {% comment %} {{ filterset.form.as_p }} {% endcomment %}
     {# Добавим кнопку отправки данных формы #}
-    <input type="submit" value="Find" />
-</form> {% endcomment %}
+    {% comment %} <input type="submit" value="Find" /> {% endcomment %}
 
 <hr>
 <form action="" method="get">
     {% csrf_token %}
-    {{form.as_p}}
+    <form action="" method="get">
+    {{filterset.form.as_p}}
     <input type="submit" value="Find"/>
 
 </form>
