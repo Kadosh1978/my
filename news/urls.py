@@ -12,5 +12,5 @@ urlpatterns = [
    # Для этого вызываем метод as_view.
    path('', PostList.as_view()),
    path('<int:pk>', PostDetail.as_view()),
-   path('search/', find, name='find') 
+   path('search/', find, name='find'), 
 ]

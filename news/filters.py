@@ -1,4 +1,5 @@
-from django_filters import FilterSet
+from django.forms import DateInput
+from django_filters import FilterSet, DateFilter
 from .models import Post
 
 # Создаем свой набор фильтров для модели Product.
@@ -22,3 +23,11 @@ class PostFilter(FilterSet):
                'gt',  # цена должна быть больше или равна указанной
            ],
        }
+date = DateFilter(
+        field_name='time_in',
+        lookup_expr='gt',
+        label='Date',
+        widget=DateInput(
+            attrs={'type': 'date'},
+        ),
+    )
