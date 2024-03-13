@@ -24,10 +24,10 @@ class PostFilter(FilterSet):
            ],
        }
 date = DateFilter(
-        field_name='time_in',
-        lookup_expr='gt',
-        label='Date',
-        widget=DateInput(
-            attrs={'type': 'date'},
-        ),
-    )
+    field_name='time_in',
+    lookup_expr='gt',
+    label='Date',
+    widget=DateInput(
+    attrs={'type': 'date'},
+            ),
+            )

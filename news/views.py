@@ -48,3 +48,21 @@ class PostDetail(DetailView):
 def find(request):
     form = PostForm
     return render(request, 'search.html', {'from': form})
+
+class PostSearch(ListView):
+    model = Post
+    ordering = 'time_in'
+    template_name = 'search.html'
+    context_object_name = 'news'
+    paginate_by = 2
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        self.filterset = PostFilter(self.request.GET, queryset)           
+        return self.filterset.qs
+    
+    def get_context_data(self, **kwargs):
+       context = super().get_context_data(**kwargs)
+       # Добавляем в контекст объект фильтрации.
+       context['filterset'] = self.filterset
+       return context
