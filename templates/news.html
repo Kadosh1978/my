@@ -18,14 +18,7 @@ News
     <input type="submit" value="Find" />
 </form> {% endcomment %}
 
-<hr>
-<form action="" method="get">
-    {% csrf_token %}
-    <form action="" method="get">
-    {{filterset.form.as_p}}
-    <input type="submit" value="Find"/>
 
-</form>
 
    <hr>
    {% if news %}
@@ -64,24 +57,22 @@ News
 
    {# Добавляем пагинацию на страницу #}
 
-   {# Информация о предыдущих страницах #}
    {% if page_obj.has_previous %}
+   {# Для каждой ссылки пагинации указываем обработку через новый тег #}
    <a href="?{% url_replace page=1 %}">1</a>
-       {% if page_obj.previous_page_number != 1 %}
-           ...
-           <a href="?page={{ page_obj.previous_page_number }}">{{ page_obj.previous_page_number }}</a>
-       {% endif %}
+   {% if page_obj.previous_page_number != 1 %}
+       ...
+       <a href="?{% url_replace page=page_obj.previous_page_number %}">{{ page_obj.previous_page_number }}</a>
    {% endif %}
+{% endif %}
 
-   {# Информация о текущей странице #}
-   {{ page_obj.number }}
+{{ page_obj.number }}
 
-   {# Информация о следующих страницах #}
-   {% if page_obj.has_next %}
-       <a href="?page={{ page_obj.next_page_number }}">{{ page_obj.next_page_number }}</a>
-       {% if paginator.num_pages != page_obj.next_page_number %}
-           ...
-           <a href="?page={{ page_obj.paginator.num_pages }}">{{ page_obj.paginator.num_pages }}</a>
-       {% endif %}
+{% if page_obj.has_next %}
+   <a href="?{% url_replace page=page_obj.next_page_number %}">{{ page_obj.next_page_number }}</a>
+   {% if paginator.num_pages != page_obj.next_page_number %}
+       ...
+       <a href="?{% url_replace page=page_obj.paginator.num_pages %}">{{ page_obj.paginator.num_pages }}</a>
    {% endif %}
+{% endif %}
 {% endblock content %}

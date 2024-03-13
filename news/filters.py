@@ -18,10 +18,11 @@ class PostFilter(FilterSet):
            'author': ['exact'],
            # количество товаров должно быть больше или равно
         #    'quantity': ['gt'],
-           'time_in': [
-        #        'lt',  # цена должна быть меньше или равна указанной
-               'gt',  # цена должна быть больше или равна указанной
-           ],
+        #    'time_in': 
+        #    [
+
+        #        'gt',  
+        #    ],
        }
 date = DateFilter(
     field_name='time_in',
