@@ -1,5 +1,6 @@
 from django.shortcuts import render
-from django.views.generic import ListView, DetailView
+from django.urls import reverse_lazy
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 
 from news.forms import PostForm
 from .models import Post
@@ -66,3 +67,21 @@ class PostSearch(ListView):
        # Добавляем в контекст объект фильтрации.
        context['filterset'] = self.filterset
        return context
+    
+class PostCreate(CreateView):
+    # Указываем нашу разработанную форму
+    form_class = PostForm
+    # модель товаров
+    model = Post
+    # и новый шаблон, в котором используется форма.
+    template_name = 'create.html'
+
+class ProductUpdate(UpdateView):
+    form_class = PostForm
+    model = Post
+    template_name = 'edit.html'
+
+class ProductDelete(DeleteView):
+    model = Post
+    template_name = 'delete.html'
+    success_url = reverse_lazy('post_list')
