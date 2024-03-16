@@ -18,7 +18,9 @@ class PostList(ListView):
     # Это имя списка, в котором будут лежать все объекты.
     # Его надо указать, чтобы обратиться к списку объектов в html-шаблоне.
     context_object_name = 'news'
-    paginate_by = 2
+    paginate_by = 3
+
+
 
     def get_queryset(self):
        # Получаем обычный запрос
@@ -55,7 +57,7 @@ class PostSearch(ListView):
     ordering = 'time_in'
     template_name = 'search.html'
     context_object_name = 'news'
-    paginate_by = 2
+    paginate_by = 3
 
     def get_queryset(self):
         queryset = super().get_queryset()
@@ -76,12 +78,20 @@ class PostCreate(CreateView):
     # и новый шаблон, в котором используется форма.
     template_name = 'create.html'
 
-class ProductUpdate(UpdateView):
+    def form_valid(self, form):
+        post = form.save(commit=False)
+        if self.request.path == '/articles/create/':
+            post.post_type = 'AR'
+        return super().form_valid(form)
+
+class PostUpdate(UpdateView):
     form_class = PostForm
     model = Post
     template_name = 'edit.html'
 
-class ProductDelete(DeleteView):
+
+    
+class PostDelete(DeleteView):
     model = Post
     template_name = 'delete.html'
     success_url = reverse_lazy('post_list')
