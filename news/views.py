@@ -80,14 +80,22 @@ class PostCreate(CreateView):
 
     def form_valid(self, form):
         post = form.save(commit=False)
-        if self.request.path == '/articles/create/':
+        if self.request.path == '/news/articles/create/':
             post.post_type = 'AR'
         return super().form_valid(form)
+    
 
 class PostUpdate(UpdateView):
     form_class = PostForm
     model = Post
     template_name = 'edit.html'
+
+   
+    def form_valid(self, form):
+        post = form.save(commit=False)
+        if self.request.path == '/news/articles/<int:pk>/edit/':
+            post.post_type = 'AR'
+        return super().form_valid(form)
 
 
     
@@ -95,3 +103,10 @@ class PostDelete(DeleteView):
     model = Post
     template_name = 'delete.html'
     success_url = reverse_lazy('post_list')
+
+    
+    def form_valid(self, form):
+        post = form.save(commit=False)
+        if self.request.path == '/news/articles/<int:pk>/delete/':
+            post.post_type = 'AR'
+        return super().form_valid(form)
