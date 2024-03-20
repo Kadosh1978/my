@@ -1,11 +1,18 @@
 from django.shortcuts import render
 from django.urls import reverse_lazy
-from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView, TemplateView
 
 from news.forms import PostForm
 from .models import Post
 from .filters import PostFilter
 
+from django.contrib.auth.mixins import LoginRequiredMixin
+
+
+class ProtectedView(LoginRequiredMixin, TemplateView):
+    template_name = 'edit.html'
+
+    
 
 class PostList(ListView):
     # Указываем модель, объекты которой мы будем выводить
@@ -85,7 +92,7 @@ class PostCreate(CreateView):
         return super().form_valid(form)
     
 
-class PostUpdate(UpdateView):
+class PostUpdate(LoginRequiredMixin ,UpdateView):
     form_class = PostForm
     model = Post
     template_name = 'edit.html'
