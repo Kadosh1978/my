@@ -1,16 +1,21 @@
 from django.shortcuts import render
 from django.urls import reverse_lazy
+from django.views import View
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView, TemplateView
 
 from news.forms import PostForm
 from .models import Post
 from .filters import PostFilter
 
-from django.contrib.auth.mixins import LoginRequiredMixin
-
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 
 class ProtectedView(LoginRequiredMixin, TemplateView):
     template_name = 'edit.html'
+
+class MyView(PermissionRequiredMixin, View):
+    permission_required = ('news.change_post',
+                           'news.delete_post',
+                           'news.add_post')
 
     
 
@@ -25,7 +30,7 @@ class PostList(ListView):
     # Это имя списка, в котором будут лежать все объекты.
     # Его надо указать, чтобы обратиться к списку объектов в html-шаблоне.
     context_object_name = 'news'
-    paginate_by = 3
+    paginate_by = 5
 
 
 
@@ -77,13 +82,17 @@ class PostSearch(ListView):
        context['filterset'] = self.filterset
        return context
     
-class PostCreate(CreateView):
+class PostCreate(LoginRequiredMixin, CreateView, PermissionRequiredMixin):
     # Указываем нашу разработанную форму
     form_class = PostForm
     # модель товаров
     model = Post
     # и новый шаблон, в котором используется форма.
     template_name = 'create.html'
+
+    permission_required = ('news.change_post',
+                           'news.delete_post',
+                           'news.add_post')
 
     def form_valid(self, form):
         post = form.save(commit=False)
@@ -97,6 +106,10 @@ class PostUpdate(LoginRequiredMixin ,UpdateView):
     model = Post
     template_name = 'edit.html'
 
+    permission_required = ('news.change_post',
+                           'news.delete_post',
+                           'news.add_post')
+
    
     def form_valid(self, form):
         post = form.save(commit=False)
@@ -106,10 +119,14 @@ class PostUpdate(LoginRequiredMixin ,UpdateView):
 
 
     
-class PostDelete(DeleteView):
+class PostDelete(LoginRequiredMixin, DeleteView):
     model = Post
     template_name = 'delete.html'
     success_url = reverse_lazy('post_list')
+
+    permission_required = ('news.change_post',
+                           'news.delete_post',
+                           'news.add_post')
 
     
     def form_valid(self, form):
