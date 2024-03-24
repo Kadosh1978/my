@@ -11,6 +11,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMix
 
 class ProtectedView(LoginRequiredMixin, TemplateView):
     template_name = 'edit.html'
+    
 
 class MyView(PermissionRequiredMixin, View):
     permission_required = ('news.change_post',
@@ -101,7 +102,7 @@ class PostCreate(LoginRequiredMixin, CreateView, PermissionRequiredMixin):
         return super().form_valid(form)
     
 
-class PostUpdate(LoginRequiredMixin ,UpdateView):
+class PostUpdate(LoginRequiredMixin ,UpdateView, PermissionRequiredMixin):
     form_class = PostForm
     model = Post
     template_name = 'edit.html'
@@ -119,7 +120,7 @@ class PostUpdate(LoginRequiredMixin ,UpdateView):
 
 
     
-class PostDelete(LoginRequiredMixin, DeleteView):
+class PostDelete(LoginRequiredMixin, DeleteView, PermissionRequiredMixin):
     model = Post
     template_name = 'delete.html'
     success_url = reverse_lazy('post_list')
