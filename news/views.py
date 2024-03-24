@@ -83,7 +83,7 @@ class PostSearch(ListView):
        context['filterset'] = self.filterset
        return context
     
-class PostCreate(LoginRequiredMixin, CreateView, PermissionRequiredMixin):
+class PostCreate(PermissionRequiredMixin, CreateView):
     # Указываем нашу разработанную форму
     form_class = PostForm
     # модель товаров
@@ -102,7 +102,7 @@ class PostCreate(LoginRequiredMixin, CreateView, PermissionRequiredMixin):
         return super().form_valid(form)
     
 
-class PostUpdate(LoginRequiredMixin ,UpdateView, PermissionRequiredMixin):
+class PostUpdate(PermissionRequiredMixin, UpdateView):
     form_class = PostForm
     model = Post
     template_name = 'edit.html'
@@ -120,7 +120,7 @@ class PostUpdate(LoginRequiredMixin ,UpdateView, PermissionRequiredMixin):
 
 
     
-class PostDelete(LoginRequiredMixin, DeleteView, PermissionRequiredMixin):
+class PostDelete(PermissionRequiredMixin, DeleteView):
     model = Post
     template_name = 'delete.html'
     success_url = reverse_lazy('post_list')
