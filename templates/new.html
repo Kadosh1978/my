@@ -16,6 +16,7 @@ News
         <td><b>Время</b></td>
         <td><b>Заголовок</b></td>
         <td><b>Статья</b></td>
+        <td><b>Тип категории</b></td>
 
     </tr>
 
@@ -25,6 +26,13 @@ News
         <td>{{ new.time_in|date:'d M Y' }}</td>
         <td>{{ new.head }}</td>
         <td>{{ new.text|censor }}</td>
+        <td>
+            {% for cat in new.category.all %}
+                {{ cat }}
+            {% endfor %}
+        </td>
+        
+
 
     </tr>
 

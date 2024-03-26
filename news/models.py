@@ -27,10 +27,14 @@ class Author(models.Model):  # наследуемся от класса Model
         self.save()
 
 class Category(models.Model):
-        category_type = models.CharField(max_length = 255, unique = True)
+    category_type = models.CharField(max_length = 255, unique = True)
 
-        def __str__(self):
-            return self.category_type
+    subsribers = models.ManyToManyField(User, blank=True, null=True, related_name='categories')
+
+    def __str__(self):
+        return self.category_type
+        
+        
     
 
 class Post(models.Model):

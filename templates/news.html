@@ -27,7 +27,8 @@ News
                <td><b>Время</b></td>
                <td><b>Заголовок</b></td>
                <td><b>Статья</b></td>
-               <td><b>Тип текса</b></td>
+               <td><b>Тип текста</b></td>
+               <td><b>Тип категории</b></td>
 
            </tr>
           
@@ -47,6 +48,11 @@ News
                <td>{{ new.head }}</td>
                <td>{{ new.text|truncatechars:20}}</td>
                <td>{{ new.post_type}}</td>
+               <td>
+                {% for cat in new.category.all %}
+                    {{ cat }}
+                {% endfor %}
+            </td>
 
            </tr>
            {% endfor %}
