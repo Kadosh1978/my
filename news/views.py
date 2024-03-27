@@ -160,7 +160,7 @@ def subscribe(request, pk):
     user = request.user
     category = Category.objects.get(id=pk)
     category.subsribers.add(user)
-
+    
     message = 'Вы подписаны'
 
     return render(request, 'news/subscribe.html', {'category': category, 'message': message})

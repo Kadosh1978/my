@@ -1,7 +1,5 @@
 from django.contrib.auth.models import User
 from django.views.generic.edit import CreateView
-
-from news.models import Category, Post
 from .models import BaseRegisterForm
 from django.shortcuts import redirect
 from django.contrib.auth.models import Group
