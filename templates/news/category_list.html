@@ -8,17 +8,12 @@ News
 {% endblock title %}
 
 {% block content %}
+
+    {% if is_not_subscriber %}
+        <p class="text-center"><a href="{% url 'subscribe' category.id%}" class="btn btn-secondary btn-sm" >Подписаться</a></p> 
+    
+    {% endif %}
    <h1>All news</h1>
-
-   {% comment %} {# Добавляем форму, которая объединяет набор полей, которые будут отправляться в запросе #}
-   <form action="" method="get">
-    {# Переменная, которую мы передали через контекст, может сгенерировать нам форму с полями #}
-    {{ filterset.form.as_p }}
-    {# Добавим кнопку отправки данных формы #}
-    <input type="submit" value="Find" />
-</form> {% endcomment %}
-
-
 
    <hr>
    {% if category_news_list %}
@@ -32,18 +27,10 @@ News
 
            </tr>
           
-           <!-- Для каждого товара будете генерироваться новая строчка,
 
-           т.е. новый HTML код, который указан в теле цикла.
-           При этом сам цикл работает точно так же, как и в Python.
-           product — переменная цикла, т.е. наш товар полученный из списка -->
            {% for new in category_news_list%}
            <tr>
-               <!-- Не забываем, что переменные в шаблоне ничем не отличаются
 
-                от переменных в Python. Здесь также можно получать доступ к
-                полям объекта модели. Например, здесь мы выводим имя,
-                в следующем столбце описание, и т.д.  -->
                <td>{{ new.time_in|date:'d M Y' }}</td>
                <td>{{ new.head }}</td>
                <td>{{ new.text|truncatechars:20}}</td>

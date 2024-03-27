@@ -137,7 +137,7 @@ class PostDelete(PermissionRequiredMixin, DeleteView):
             post.post_type = 'AR'
         return super().form_valid(form)
     
-class CategoryListView(PostList):
+class CategoryListView(ListView):   
 
     model = Post
     template_name = 'news/category_list.html'
@@ -160,7 +160,7 @@ def subscribe(request, pk):
     user = request.user
     category = Category.objects.get(id=pk)
     category.subsribers.add(user)
-    
+
     message = 'Вы подписаны'
 
     return render(request, 'news/subscribe.html', {'category': category, 'message': message})
