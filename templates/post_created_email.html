@@ -1,0 +1,13 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    {% comment %} <meta name="viewport" content="width=device-width, initial-scale=1.0"> {% endcomment %}
+    <title>Уведомление</title>
+</head>
+<body>
+    {% load account %} <!-- Загружаем тег, который позволит получить нам ссылку на подтверждение -->
+    <h1>You have new post {{ user.username }}!</h1>
+    <h3>Please follow <a href="{{ link }}">link</a> </h3>
+     <p>{{ text|truncatechars:50 }}</p>
+</body>
+</html>

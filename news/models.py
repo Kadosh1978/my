@@ -29,7 +29,7 @@ class Author(models.Model):  # наследуемся от класса Model
 class Category(models.Model):
     category_type = models.CharField(max_length = 255, unique = True)
 
-    subsribers = models.ManyToManyField(User, blank=True, null=True, related_name='categories')
+    subscribers = models.ManyToManyField(User, blank=True, related_name='categories')
 
     def __str__(self):
         return self.category_type
