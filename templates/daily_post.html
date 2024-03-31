@@ -6,8 +6,16 @@
 </head>
 <body>
     {% load account %} <!-- Загружаем тег, который позволит получить нам ссылку на подтверждение -->
-    <h1>You have new post {{ user.username }}!</h1>
-    <h3>New post is <a href="{{ link }}">here</a> </h3>
-     <p>{{ text|truncatechars:50 }}</p>
+    <h1>You have new posts last week{{ user.username }}!</h1>
+    <h3>New posts are <a href="{{ link }}">here</a> </h3>
+    <ul>
+
+        {% for post in posts %}
+        <li><a href="{{ link }}{{ post.get_absolute_url }}"> {{ post.head }} </a></li>
+        {% endfor %}
+
+    </ul>
+
+     {% comment %} <p>{{ text|truncatechars:50 }}</p> {% endcomment %}
 </body>
 </html>
