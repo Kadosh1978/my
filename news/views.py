@@ -7,6 +7,7 @@ from django.contrib.auth.decorators import login_required
 from news.forms import PostForm
 from .models import Category, Post
 from .filters import PostFilter
+from .tasks import send_notifications
 
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 
@@ -100,6 +101,7 @@ class PostCreate(PermissionRequiredMixin, CreateView):
         post = form.save(commit=False)
         if self.request.path == '/news/articles/create/':
             post.post_type = 'AR'
+        # send_notifications.delay(post.pk)
         return super().form_valid(form)
     
 
