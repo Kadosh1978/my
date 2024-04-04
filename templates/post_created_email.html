@@ -8,6 +8,7 @@
     {% load account %} <!-- Загружаем тег, который позволит получить нам ссылку на подтверждение -->
     <h1>You have new post {{ user.username }}!</h1>
     <h3>New post is <a href="{{ link }}">here</a> </h3>
+     <p>{{ title }}</p>
      <p>{{ text|truncatechars:50 }}</p>
 </body>
 </html>

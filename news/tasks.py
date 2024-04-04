@@ -2,8 +2,6 @@ from django.conf import settings
 from django.template.loader import render_to_string
 from django.core.mail import EmailMultiAlternatives
 from celery import shared_task
-import time
-
 from requests import head
 from news.models import Post, Category
 
@@ -14,6 +12,7 @@ def send_notifications(pk):
     post = Post.objects.get(pk=pk)
     categories = post.category.all()
     title = post.head
+    text = post.text
     subscribers_emails = []
 
     for category in categories:
@@ -25,7 +24,8 @@ def send_notifications(pk):
         'post_created_email.html',
         {
             
-            'text': post.preview,
+            'text': text,
+            'title': title,
             'link': f'{settings.SITE_URL}/news/{pk}'
         }
     )
@@ -41,6 +41,37 @@ def send_notifications(pk):
     msg.send()  
 
 
+def send_notifications_weekly():
+    post = Post.objects.get.all()
+    categories = post.category.all()
+    title = post.head
+    text = post.text
+    subscribers_emails = []
+
+    for category in categories:
+        subscribers_users = category.subscribers.all()
+        for sub_user in subscribers_users:
+            subscribers_emails.append(sub_user.email)
+
+    html_content = render_to_string(
+        'post_created_email.html',
+        {
+            
+            'text': text,
+            'title': title,
+            'link': f'{settings.SITE_URL}/news/'
+        }
+    )
+
+    msg = EmailMultiAlternatives(
+        subject= head,
+        body='',
+        from_email=settings.DEFAULT_FROM_EMAIL,
+        to= subscribers_emails,
+    )
+
+    msg.attach_alternative(html_content, 'text/html')
+    msg.send()  
 
 
 
@@ -76,4 +107,4 @@ def send_notifications(pk):
 #             subscribers = cat.subscribers.all()
 #             subscribers_emails +=[s.email for s in subscribers]
 
-#         send_notifications(instance.preview(), instance.pk, instance.head, subscribers_emails)
+#         send_notifications(instance.preview(), instance.pk, instance.head, subscribers_emails),

@@ -133,11 +133,11 @@ class PostDelete(PermissionRequiredMixin, DeleteView):
                            'news.add_post')
 
     
-    def form_valid(self, form):
-        post = form.save(commit=False)
-        if self.request.path == '/news/articles/<int:pk>/delete/':
-            post.post_type = 'AR'
-        return super().form_valid(form)
+    # def form_valid(self, form):
+    #     post = form.save(commit=False)
+    #     if self.request.path == '/news/articles/<int:pk>/delete/':
+    #         post.post_type = 'AR'
+    #     return super().form_valid(form)
     
 class CategoryListView(ListView):   
 
