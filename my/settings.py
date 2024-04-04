@@ -152,10 +152,10 @@ ACCOUNT_FORMS = {'signup': 'sign.models.BasicSignupForm'}
 
 EMAIL_HOST = 'smtp.yandex.ru' 
 EMAIL_PORT = 465 
-EMAIL_HOST_USER = 'kadoshnoone' 
-EMAIL_HOST_PASSWORD = 'hqtmrvfgtgfipkss'  # пароль от почты
+EMAIL_HOST_USER = '' 
+EMAIL_HOST_PASSWORD = ''  # пароль от почты
 EMAIL_USE_SSL = True 
-DEFAULT_FROM_EMAIL = 'kadoshnoone@yandex.ru'
+DEFAULT_FROM_EMAIL = ''
 
 # формат даты, которую будет воспринимать наш задачник (вспоминаем модуль по фильтрам) 
 APSCHEDULER_DATETIME_FORMAT = "N j, Y, f:s a"
