@@ -1,8 +1,12 @@
+
+import datetime
+# from time import timezone
+
+from django.utils import timezone
 from django.conf import settings
 from django.template.loader import render_to_string
 from django.core.mail import EmailMultiAlternatives
 from celery import shared_task
-from requests import head
 from news.models import Post, Category
 
 
@@ -31,7 +35,7 @@ def send_notifications(pk):
     )
 
     msg = EmailMultiAlternatives(
-        subject= head,
+        subject= post.head,
         body='',
         from_email=settings.DEFAULT_FROM_EMAIL,
         to= subscribers_emails,
@@ -40,71 +44,31 @@ def send_notifications(pk):
     msg.attach_alternative(html_content, 'text/html')
     msg.send()  
 
-
+@shared_task
 def send_notifications_weekly():
-    post = Post.objects.get.all()
-    categories = post.category.all()
-    title = post.head
-    text = post.text
-    subscribers_emails = []
+    today = timezone.now()
+    last_week = today - datetime.timedelta(days=7)
+    posts = Post.objects.filter(time_in__gte=last_week)
+    categories = set(posts.values_list('category__category_type', flat=True))
+    subscribers = set(Category.objects.filter(category_type__in=categories).values_list('subscribers__email', flat=True))
 
-    for category in categories:
-        subscribers_users = category.subscribers.all()
-        for sub_user in subscribers_users:
-            subscribers_emails.append(sub_user.email)
 
     html_content = render_to_string(
-        'post_created_email.html',
+        'daily_post.html',
         {
-            
-            'text': text,
-            'title': title,
-            'link': f'{settings.SITE_URL}/news/'
+            'link': settings.SITE_URL,
+            'posts': posts,
         }
+
     )
 
-    msg = EmailMultiAlternatives(
-        subject= head,
+    msg = EmailMultiAlternatives(subject='Статьи за неделю', 
         body='',
         from_email=settings.DEFAULT_FROM_EMAIL,
-        to= subscribers_emails,
-    )
+        to=subscribers,
+        )
+
+
 
     msg.attach_alternative(html_content, 'text/html')
-    msg.send()  
-
-
-
-# def send_notifications(preview, pk, head, subscribers):
-#     html_content = render_to_string(
-#         'post_created_email.html',
-#         {
-            
-#             'text': preview,
-#             'link': f'{settings.SITE_URL}/news/{pk}'
-#         }
-#     )
-
-#     msg = EmailMultiAlternatives(
-#         subject= head,
-#         body='',
-#         from_email=settings.DEFAULT_FROM_EMAIL,
-#         to= subscribers,
-#     )
-
-#     msg.attach_alternative(html_content, 'text/html')
-#     msg.send()  
-
-
-
-# @receiver(m2m_changed, sender=PostCategory)
-# def notify_about_new_post(sender, instance, **kwargs):
-#     if kwargs['action'] == 'post_add':
-#         categories = instance.category.all()
-#         subscribers_emails = []
-
-#         for cat in categories:
-#             subscribers = cat.subscribers.all()
-#             subscribers_emails +=[s.email for s in subscribers]
-
-#         send_notifications(instance.preview(), instance.pk, instance.head, subscribers_emails),
+    msg.send()
