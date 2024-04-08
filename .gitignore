@@ -1,3 +1,4 @@
 __pycashe__/
 cache_files/
 .vscode
+.env

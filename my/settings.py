@@ -1,5 +1,8 @@
 from pathlib import Path
 import os
+from dotenv import load_dotenv, find_dotenv
+
+load_dotenv(find_dotenv())
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -152,10 +155,10 @@ ACCOUNT_FORMS = {'signup': 'sign.models.BasicSignupForm'}
 
 EMAIL_HOST = 'smtp.yandex.ru' 
 EMAIL_PORT = 465 
-EMAIL_HOST_USER = '' 
-EMAIL_HOST_PASSWORD = ''  # пароль от почты
+EMAIL_HOST_USER = os.getenv('HOST_USER') 
+EMAIL_HOST_PASSWORD = os.getenv('HOST_PASSWORD')  # пароль от почты
 EMAIL_USE_SSL = True 
-DEFAULT_FROM_EMAIL = ''
+DEFAULT_FROM_EMAIL = os.getenv ('FROM_EMAIL')
 
 # формат даты, которую будет воспринимать наш задачник (вспоминаем модуль по фильтрам) 
 APSCHEDULER_DATETIME_FORMAT = "N j, Y, f:s a"
