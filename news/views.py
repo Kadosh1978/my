@@ -7,7 +7,6 @@ from django.contrib.auth.decorators import login_required
 from news.forms import PostForm
 from .models import Category, Post
 from .filters import PostFilter
-from .tasks import send_notifications
 
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 

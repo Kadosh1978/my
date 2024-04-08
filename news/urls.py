@@ -3,12 +3,13 @@ from django.urls import path
 from news.views import CategoryListView
 # Импортируем созданное нами представление
 from .views import PostList, PostDetail, PostDelete, find, PostSearch, PostCreate, PostUpdate, subscribe
+from django.views.decorators.cache import cache_page
 
 
 urlpatterns = [
 
-   path('', PostList.as_view(), name='post_list'),
-   path('<int:pk>', PostDetail.as_view(), name='post_detail'),
+   path('', cache_page(60) (PostList.as_view()), name='post_list'),
+   path('<int:pk>', cache_page(60 * 5) (PostDetail.as_view()), name='post_detail'),
    path('search/', PostSearch.as_view(), name='find'),
    path('post/create/', PostCreate.as_view(), name='post_create'),
    path('post/<int:pk>/edit/', PostUpdate.as_view(), name='post_update'),
