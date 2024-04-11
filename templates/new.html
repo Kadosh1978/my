@@ -5,9 +5,12 @@
 {% load custom_filters %}
 
 <!-- Название у нас будет Product -->
-{% cache 30 title %}
+
 {% block title %}
+{% cache 30 title %}
 News
+
+{% endcache %}
 {% endblock title %}
 
 <!-- В контенте на странице мы выводим сам товар, идентификатор которого был передан в url -->
@@ -29,7 +32,7 @@ News
         <td>{{ new.time_in|date:'d M Y' }}</td>
         <td>{{ new.head }}</td>
         <td>{{ new.text|censor }}</td>
-        <td>
+         <td>
             {% for cat in new.category.all %}
                 {{ cat }}
             {% endfor %}

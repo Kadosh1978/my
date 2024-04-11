@@ -47,7 +47,7 @@ News
                 в следующем столбце описание, и т.д.  -->
                <td>{{ new.time_in|date:'d M Y' }}</td>
                <td>{{ new.head }}</td>
-               <td>{{ new.text|truncatechars:20}}</td>
+               <td><a href="{% url 'post_detail' p.id %}"> {{ new.text|truncatechars:20}}</a></td>
                <td>{{ new.post_type}}</td>
                <td>
                 {% for cat in new.category.all %}
