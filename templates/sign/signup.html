@@ -1,10 +1,15 @@
-{% extends "flatpages/default.html" %}
+{% comment %} {% extends "flatpages/default.html" %} {% endcomment %}
+{%load crispy_forms_tags %}
 
 {% block content %}
+<head>
+        <link rel="stylesheet" type = "text/css" href = "https://bootswatch.com/5/morph/bootstrap.min.css">
+</head>
 <h2> Регистрация </h2>
 <form method="post">
 {% csrf_token %}
-{{ form.as_p }}
+{{ form|crispy }}
 <input type="submit" value="Продолжить">
 </form>
+<button><a href="{% url 'post_list' %}">На главную</a></button>
 {% endblock %}

@@ -11,15 +11,8 @@ News
 
    <h1>All news</h1>
 
-   {% comment %} {# Добавляем форму, которая объединяет набор полей, которые будут отправляться в запросе #}
-   <form action="" method="get">
-    {# Переменная, которую мы передали через контекст, может сгенерировать нам форму с полями #}
-    {{ filterset.form.as_p }}
-    {# Добавим кнопку отправки данных формы #}
-    <input type="submit" value="Find" />
-</form> {% endcomment %}
-
-
+   <td><button><a href="{% url 'post_create'%}">Создать новость</a></button></td>
+   <td><button><a href="{% url 'articles_create'%}">Создать статью</a></button></td>
 
    <hr>
    {% if news %}
@@ -47,7 +40,7 @@ News
                 в следующем столбце описание, и т.д.  -->
                <td>{{ new.time_in|date:'d M Y' }}</td>
                <td>{{ new.head }}</td>
-               <td><a href="{% url 'post_detail' p.id %}"> {{ new.text|truncatechars:20}}</a></td>
+               <td><a href="{% url 'post_detail' new.id %}"> {{ new.text|truncatechars:20}}</a></td>
                <td>{{ new.post_type}}</td>
                <td>
                 {% for cat in new.category.all %}

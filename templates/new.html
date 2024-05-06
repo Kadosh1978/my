@@ -37,8 +37,8 @@ News
                 {{ cat }}
             {% endfor %}
         </td>
-        
-
+        <td><button><a href="{% url 'post_update' new.id %}">Редактировать</a></button></td>
+        <td><button><a href="{% url 'post_delete' new.id %}">Удалить</a></button></td>
 
     </tr>
 
