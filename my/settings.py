@@ -252,19 +252,19 @@ LOGGING = {
             'level': 'INFO',
             'filters': ['require_debug_false'],
             'class': 'logging.FileHandler',
-            'filename': 'logging\general.log',
+            'filename': 'logging/general.log',
             'formatter': 'general'
         },
         'errors': {
             'level': 'ERROR',
             'class': 'logging.FileHandler',
-            'filename': 'logging\errors.log',
+            'filename': 'logging/errors.log',
             'formatter': 'errors'
         },
         'security': {
             'level': 'INFO',
             'class': 'logging.FileHandler',
-            'filename': 'logging\security.log',
+            'filename': 'logging/security.log',
             'formatter': 'security'
         },
         'mail_admins': {
